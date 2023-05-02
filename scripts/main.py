@@ -36,18 +36,15 @@ def readData():
 
 if __name__ == "__main__":
     sys.path.insert(0, "..")
-    from library.MainWindow import UiMainWindow
+    from library.MainWindow import Ui_MainWindow
     from library.PlotDialog import PlotDialog
     data = readData()
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = UiMainWindow()
+    ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     setupComboBoxes()
     setupButtonListeners()
 
     sys.exit(app.exec_())
-
-
-# тестовый коммент
