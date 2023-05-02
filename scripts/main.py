@@ -26,7 +26,7 @@ def setupComboBoxes():
          'valence']
         )
     ui.comboBoxColors.addItems(["blue", "green", "red", "cyan", "magenta", "yellow", "black", "white"])
-    ui.comboBoxType.addItems(["hist"])
+    ui.comboBoxType.addItems(["hist", "bar"])
 
 
 def setupButtonListeners():
