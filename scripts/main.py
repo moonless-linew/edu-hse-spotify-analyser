@@ -3,10 +3,6 @@ import matplotlib
 import pandas as pd
 import sys
 import os
-from library.MainWindow import UiMainWindow
-from library.PlotDialog import PlotDialog
-import threading
-
 matplotlib.use('Qt5Agg')
 
 
@@ -39,6 +35,9 @@ def readData():
 
 
 if __name__ == "__main__":
+    sys.path.insert(0, "..")
+    from library.MainWindow import UiMainWindow
+    from library.PlotDialog import PlotDialog
     data = readData()
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
