@@ -49,3 +49,6 @@ if __name__ == "__main__":
     setupButtonListeners()
 
     sys.exit(app.exec_())
+
+
+# тестовый коммент
