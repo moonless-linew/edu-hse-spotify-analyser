@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-
-df = pd.read_csv("data/SpotifyFeatures.csv")
+import os
+df = pd.read_csv(os.path.dirname(__file__).replace("scripts\\analysis", "data") + "\SpotifyFeatures.csv")
 
 
 def average(param_key, param_number):
@@ -24,6 +24,7 @@ def describe_artist(name, param):
     '''
     return df.loc[df["artist_name"] == name, param].describe().to_dict()
 
+
 # TODO адаптировать для интерфейса
 def corr_matrix():
     '''
@@ -34,15 +35,15 @@ def corr_matrix():
     plt.matshow(df.corr(), fignum=f.number)
 
     # названия осей
-    plt.xticks(range(df.select_dtypes(['number']).shape[1]), 
-               df.select_dtypes(['number']).columns, 
-               fontsize=14, rotation=45) 
-    plt.yticks(range(df.select_dtypes(['number']).shape[1]), 
+    plt.xticks(range(df.select_dtypes(['number']).shape[1]),
+               df.select_dtypes(['number']).columns,
+               fontsize=14, rotation=45)
+    plt.yticks(range(df.select_dtypes(['number']).shape[1]),
                df.select_dtypes(['number']).columns,
                fontsize=14)
-    
+
     # шкала корреляции
-    cb = plt.colorbar() 
+    cb = plt.colorbar()
     cb.ax.tick_params(labelsize=14)
 
     # заголовок

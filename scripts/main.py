@@ -3,6 +3,7 @@ import matplotlib
 import pandas as pd
 import sys
 import os
+
 matplotlib.use('Qt5Agg')
 
 
@@ -16,18 +17,40 @@ def open_plot_dialog(param, color, type):
 
 
 def setup_combo_boxes():
+    keys = ['popularity', 'acousticness', 'danceability',
+            'energy', 'instrumentalness', 'key', 'liveness', 'loudness', 'mode', 'speechiness', 'tempo',
+            'valence']
     ui.comboBoxParameters.addItems(
-        ['popularity', 'acousticness', 'danceability',
-         'energy', 'instrumentalness', 'key', 'liveness', 'loudness', 'mode', 'speechiness', 'tempo',
-         'valence']
-        )
+        keys
+    )
     ui.comboBoxColors.addItems(["blue", "green", "red", "cyan", "magenta", "yellow", "black", "white"])
     ui.comboBoxType.addItems(["hist", "bar"])
+    ui.comboBoxParameters_2.addItems(keys)
 
 
 def setup_button_listeners():
-    ui.pushButton.clicked.connect(
+    ui.horizontalSlider.valueChanged.connect(
+        lambda: set_current_value(ui.horizontalSlider.value())
+    )
+    ui.plot_by_parameter_build.clicked.connect(
         lambda: open_plot_dialog(ui.comboBoxParameters.currentText(), ui.comboBoxColors.currentText(), "hist"))
+    ui.top_tracks_calculate.clicked.connect(
+        lambda: calculate_top_tracks(ui.comboBoxParameters_2.currentText(), ui.horizontalSlider.value())
+    )
+
+
+def set_current_value(value):
+    ui.label_9.setText("Top number:" + str(value))
+
+
+def calculate_top_tracks(key, count):
+    tracks = top_tracks(key, count)
+    ui.listWidget_2.clear()
+    for i in range(len(tracks)):
+        current = tracks[i]
+        ui.listWidget_2.addItem(
+            current["track_name"] + " - " + current["artist_name"] + "(" + current["genre"] + "," + str(current[
+                                                                                                            key]) + ")")
 
 
 def setup_track_list():
@@ -56,7 +79,6 @@ def handle_row_change():
     ui.valence.setText(str(data["valence"][ui.listWidget.currentRow()]))
 
 
-
 def read_data():
     return pd.read_csv(os.path.dirname(__file__).replace("scripts", "data") + "\SpotifyFeatures.csv")
 
@@ -65,6 +87,8 @@ if __name__ == "__main__":
     sys.path.insert(0, "..")
     from library.MainWindow import Ui_MainWindow
     from library.PlotDialog import PlotDialog
+    from analysis.analysis_methods import top_tracks
+
     data = read_data()
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
