@@ -14,7 +14,7 @@ def average(param_key, param_number):
     # param_number - количественное значение по типу liveness, popularity
 
     df_to_graph = df.groupby(param_key)[param_number].mean()
-    return list(df_to_graph.keys), list(df_to_graph)
+    return list(df_to_graph.keys()), list(df_to_graph)
 
 
 def describe_artist(name, param):
@@ -59,3 +59,14 @@ def top_tracks(key, count):
     df_sorted = df.sort_values([key, "artist_name", "track_name"], ascending=[False, True, True]).head(count)
     df_sorted = df_sorted[["artist_name", "track_name", "genre", key]]
     return list(df_sorted.keys()), df_sorted.values.tolist()
+
+
+def artist_popularity(name):
+    '''
+    Функция для получения популярности треков артиста по порядку
+    Возвращает лист индексов и лист значений популярности
+    '''
+    df2 = df.loc[df["artist_name"] == name]["popularity"]
+    y = df2.values.tolist()
+    x = [k for k in range(len(y))]
+    return x, y
