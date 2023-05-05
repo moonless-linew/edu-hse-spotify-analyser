@@ -66,7 +66,7 @@ def top_tracks(key, count, df):
     return out
 
 
-def artist_popularity(name):
+def artist_popularity(name, df):
     '''
     Функция для получения популярности треков артиста по порядку
     Возвращает лист индексов и лист значений популярности
