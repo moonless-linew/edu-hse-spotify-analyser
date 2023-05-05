@@ -1,10 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import os
-df = pd.read_csv(os.path.dirname(__file__).replace("scripts\\analysis", "data") + "\SpotifyFeatures.csv")
 
 
-def average(param_key, param_number):
+def average(param_key, param_number, df):
     '''
     Функция для получения зависимости
     среднего численного параметра от качественного параметра
@@ -17,7 +15,7 @@ def average(param_key, param_number):
     return list(df_to_graph[param_key]), list(df_to_graph[param_number])
 
 
-def describe_artist(name, param):
+def describe_artist(name, param, df):
     '''
     Функция для описания параметра артиста
     Возвращает словарь
@@ -26,11 +24,10 @@ def describe_artist(name, param):
 
 
 # TODO адаптировать для интерфейса
-def corr_matrix():
+def corr_matrix(df):
     '''
     Функция для построения матрицы корреляции
     '''
-    df = pd.read_csv("data/SpotifyFeatures.csv")
     f = plt.figure(figsize=(19, 15))
     plt.matshow(df.corr(), fignum=f.number)
 
@@ -51,7 +48,7 @@ def corr_matrix():
     plt.show()
 
 
-def top_tracks(key, count):
+def top_tracks(key, count, df):
     '''
     Функция для получения топа треков по параметру
     Возвращает лист названия столбцов и лист листов значений
@@ -69,7 +66,7 @@ def top_tracks(key, count):
     return out
 
 
-def artist_popularity(name):
+def artist_popularity(name, df):
     '''
     Функция для получения популярности треков артиста по порядку
     Возвращает лист индексов и лист значений популярности
@@ -80,7 +77,7 @@ def artist_popularity(name):
     return x, y
 
 
-def genre_evolution(genre):
+def genre_evolution(genre, df):
     df2 = df.loc[df["genre"] == genre]["popularity"]
     y = df2.values.tolist()
     x = [k for k in range(len(y))]

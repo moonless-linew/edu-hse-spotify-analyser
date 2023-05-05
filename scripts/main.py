@@ -11,9 +11,12 @@ def open_plot_dialog(param, color, type):
     dialog = PlotDialog()
     ax = dialog.figure.add_subplot(111)
     column = data[param]
-    ax.hist(column, color=color)
-    dialog.canvas.draw()
-    dialog.exec_()
+    if type == "hist":
+        ax.hist(column, color=color)
+        dialog.canvas.draw()
+        dialog.exec_()
+    # if type == "correlation":
+    #     corr_matrix(data)
 
 
 def setup_combo_boxes():
@@ -24,27 +27,31 @@ def setup_combo_boxes():
         keys
     )
     ui.comboBoxColors.addItems(["blue", "green", "red", "cyan", "magenta", "yellow", "black", "white"])
-    ui.comboBoxType.addItems(["hist", "bar"])
+    ui.comboBoxTypes.addItems(["hist", "bar"])
     ui.comboBoxParameters_2.addItems(keys)
 
 
-def setup_button_listeners():
+def setup_listeners():
     ui.horizontalSlider.valueChanged.connect(
-        lambda: set_current_value(ui.horizontalSlider.value())
+        lambda: set_current_value_of_slider(ui.horizontalSlider.value())
     )
     ui.plot_by_parameter_build.clicked.connect(
-        lambda: open_plot_dialog(ui.comboBoxParameters.currentText(), ui.comboBoxColors.currentText(), "hist"))
+        lambda: open_plot_dialog(ui.comboBoxParameters.currentText(), ui.comboBoxColors.currentText(),
+                                 ui.comboBoxTypes.currentText()))
     ui.top_tracks_calculate.clicked.connect(
         lambda: calculate_top_tracks(ui.comboBoxParameters_2.currentText(), ui.horizontalSlider.value())
     )
+    ui.correlation.clicked.connect(
+        lambda: corr_matrix(data)
+    )
 
 
-def set_current_value(value):
-    ui.label_9.setText("Top number:" + str(value))
+def set_current_value_of_slider(value):
+    ui.label_9.setText("Max number of items: " + str(value))
 
 
 def calculate_top_tracks(key, count):
-    tracks = top_tracks(key, count)
+    tracks = top_tracks(key, count, data)
     ui.listWidget_2.clear()
     for i in range(len(tracks)):
         current = tracks[i]
@@ -88,6 +95,7 @@ if __name__ == "__main__":
     from library.MainWindow import Ui_MainWindow
     from library.PlotDialog import PlotDialog
     from analysis.analysis_methods import top_tracks
+    from analysis.analysis_methods import corr_matrix
 
     data = read_data()
     app = QtWidgets.QApplication(sys.argv)
@@ -97,6 +105,6 @@ if __name__ == "__main__":
     MainWindow.show()
     setup_combo_boxes()
     setup_track_list()
-    setup_button_listeners()
+    setup_listeners()
 
     sys.exit(app.exec_())
