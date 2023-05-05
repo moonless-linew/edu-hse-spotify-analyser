@@ -11,7 +11,7 @@ def average(param_key, param_number, df, color, title):
     # param_number - количественное значение по типу liveness, popularity
 
     df_to_graph = df.groupby(param_key, as_index=False)[param_number].mean()
-    f = plt.figure(figsize=(15, 8))
+    plt.figure(figsize=(15, 8))
     plt.bar(df_to_graph[param_key], df_to_graph[param_number], color=color)
     plt.xlabel(param_key, fontsize=14)
     plt.xticks(rotation=45)
@@ -80,7 +80,7 @@ def artist_popularity(name, df, color):
     df2 = df.loc[df["artist_name"] == name]["popularity"]
     y = df2.values.tolist()
     x = [k for k in range(len(y))]
-    f = plt.figure(figsize=(15, 8))
+    plt.figure(figsize=(15, 8))
     plt.plot(x, y, "-o", color=color)
     plt.title(f"Popularity of {name}", fontsize=16)
     plt.xlabel("Number of track", fontsize=14)
@@ -96,7 +96,7 @@ def genre_evolution(genre, df, color):
     df2 = df.loc[df["genre"] == genre]["popularity"]
     y = df2.values.tolist()
     x = [k for k in range(len(y))]
-    f = plt.figure(figsize=(15, 8))
+    plt.figure(figsize=(15, 8))
     plt.plot(x, y, "o", color=color)
     plt.title(f"Evolution of {genre} genre", fontsize=16)
     plt.xlabel("Number of track", fontsize=14)
