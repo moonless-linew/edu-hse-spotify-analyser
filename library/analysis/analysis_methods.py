@@ -102,3 +102,12 @@ def genre_evolution(genre, df, color):
     plt.xlabel("Number of track", fontsize=14)
     plt.ylabel("Popularity", fontsize=14)
     plt.show()
+
+
+def average_artists_popularity(df):
+    """
+    Функция для получения списка средних популярностей артистов.
+    Возвращает словарь: ключ - имя артиста, значение - средняя популярность
+    """
+    df_to_print = df.groupby("artist_name")["popularity"].mean()
+    return df_to_print.to_dict()
