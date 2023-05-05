@@ -76,7 +76,7 @@ def artist_popularity(name, df):
     return x, y
 
 
-def genre_evolution(genre, df):
+def genre_evolution(genre):
     df2 = df.loc[df["genre"] == genre]["popularity"]
     y = df2.values.tolist()
     x = [k for k in range(len(y))]
