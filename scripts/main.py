@@ -91,15 +91,16 @@ def read_data():
 
 
 if __name__ == "__main__":
+    from PyQt5 import QtGui
     sys.path.insert(0, "..")
     from library.ui.MainWindow import Ui_MainWindow
     from library.ui.PlotDialog import PlotDialog
     from library.analysis.analysis_methods import top_tracks
     from library.analysis.analysis_methods import corr_matrix
-
     data = read_data()
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
+    MainWindow.setWindowIcon(QtGui.QIcon("../images/ic_launcher.png"))
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()

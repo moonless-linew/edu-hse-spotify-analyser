@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../PycharmProjects/pythonProject3/ic_launcher.png</normaloff>../../../PycharmProjects/pythonProject3/ic_launcher.png</iconset>
+    <normaloff>:/images/images/ic_launcher.png</normaloff>:/images/images/ic_launcher.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
