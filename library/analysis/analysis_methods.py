@@ -71,7 +71,7 @@ def top_tracks(key, count, df):
     return out
 
 
-def artist_popularity(name, df):
+def artist_popularity(name, df, color):
     '''
     Функция для получения популярности треков артиста по порядку
     Возвращает лист индексов и лист значений популярности
@@ -79,7 +79,12 @@ def artist_popularity(name, df):
     df2 = df.loc[df["artist_name"] == name]["popularity"]
     y = df2.values.tolist()
     x = [k for k in range(len(y))]
-    return x, y
+    f = plt.figure(figsize=(15, 8))
+    plt.plot(x, y, "-o", color=color)
+    plt.title(f"Popularity of {name}", fontsize=16)
+    plt.xlabel("Number of track", fontsize=14)
+    plt.ylabel("Popularity", fontsize=14)
+    plt.show()
 
 
 def genre_evolution(genre, df):
