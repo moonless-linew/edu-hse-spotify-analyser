@@ -28,7 +28,7 @@ def corr_matrix(df):
     '''
     Функция для построения матрицы корреляции
     '''
-    f = plt.figure(figsize=(19, 15))
+    f = plt.figure(figsize=(15, 8))
     plt.matshow(df.corr(), fignum=f.number)
 
     # названия осей

@@ -61,7 +61,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -557,6 +557,51 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Artist analysis</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QLabel" name="label_23">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Artist description</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_7">
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="lineWidth">
+           <number>2</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="tab">
        <attribute name="title">
         <string>Graphical analysis</string>
@@ -597,7 +642,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Arguments for graph</string>
+           <string>Arguments for plot</string>
           </property>
          </widget>
         </item>
@@ -620,11 +665,12 @@
            <item row="1" column="1">
             <widget class="QComboBox" name="comboBoxTypes"/>
            </item>
-           <item row="4" column="1">
-            <widget class="QComboBox" name="comboBoxParameters_3"/>
-           </item>
-           <item row="2" column="1">
-            <widget class="QComboBox" name="comboBoxParameters"/>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>X axis parameter</string>
+             </property>
+            </widget>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="label_5">
@@ -639,19 +685,18 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0" rowspan="2">
-            <widget class="QLabel" name="label_2">
-             <property name="text">
-              <string>X axis parameter</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
+           <item row="3" column="0">
             <widget class="QLabel" name="label_19">
              <property name="text">
               <string>Y axis parameter</string>
              </property>
             </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="comboBoxParameters"/>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="comboBox"/>
            </item>
           </layout>
          </widget>
@@ -926,9 +971,9 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="tab_5">
        <attribute name="title">
-        <string>Preferences</string>
+        <string>Search on Spotify</string>
        </attribute>
       </widget>
      </widget>
