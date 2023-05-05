@@ -23,7 +23,6 @@ def describe_artist(name, param, df):
     return df.loc[df["artist_name"] == name, param].describe().to_dict()
 
 
-# TODO адаптировать для интерфейса
 def corr_matrix(df):
     '''
     Функция для построения матрицы корреляции
