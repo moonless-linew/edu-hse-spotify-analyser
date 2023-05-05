@@ -67,7 +67,7 @@ def top_tracks(key, count):
         out.append(d)
     return out
 
-
+# TODO добавить года
 def artist_popularity(name):
     '''
     Функция для получения популярности треков артиста по порядку
@@ -78,7 +78,7 @@ def artist_popularity(name):
     x = [k for k in range(len(y))]
     return x, y
 
-
+# TODO добавить года
 def genre_evolution(genre):
     df2 = df.loc[df["genre"] == genre]["popularity"]
     y = df2.values.tolist()
