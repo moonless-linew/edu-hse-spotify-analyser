@@ -43,7 +43,7 @@ def corr_matrix(df):
     cb.ax.tick_params(labelsize=14)
 
     # заголовок
-    plt.title('Матрица корреляции', fontsize=16)
+    plt.title('Matrix of correlation', fontsize=16)
     plt.show()
 
 
@@ -76,7 +76,7 @@ def artist_popularity(name, df):
     return x, y
 
 
-def genre_evolution(genre):
+def genre_evolution(genre, df):
     df2 = df.loc[df["genre"] == genre]["popularity"]
     y = df2.values.tolist()
     x = [k for k in range(len(y))]
