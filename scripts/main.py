@@ -92,10 +92,10 @@ def read_data():
 
 if __name__ == "__main__":
     sys.path.insert(0, "..")
-    from library.MainWindow import Ui_MainWindow
-    from library.PlotDialog import PlotDialog
-    from analysis.analysis_methods import top_tracks
-    from analysis.analysis_methods import corr_matrix
+    from library.ui.MainWindow import Ui_MainWindow
+    from library.ui.PlotDialog import PlotDialog
+    from library.analysis.analysis_methods import top_tracks
+    from library.analysis.analysis_methods import corr_matrix
 
     data = read_data()
     app = QtWidgets.QApplication(sys.argv)
