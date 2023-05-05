@@ -1,10 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv("data/SpotifyFeatures.csv")
 
-
-def average(param_key, param_number):
+def average(param_key, param_number, df):
     '''
     Функция для получения зависимости
     среднего численного параметра от качественного параметра
@@ -17,32 +15,32 @@ def average(param_key, param_number):
     return list(df_to_graph[param_key]), list(df_to_graph[param_number])
 
 
-def describe_artist(name, param):
+def describe_artist(name, param, df):
     '''
     Функция для описания параметра артиста
     Возвращает словарь
     '''
     return df.loc[df["artist_name"] == name, param].describe().to_dict()
 
+
 # TODO адаптировать для интерфейса
-def corr_matrix():
+def corr_matrix(df):
     '''
     Функция для построения матрицы корреляции
     '''
-    df = pd.read_csv("data/SpotifyFeatures.csv")
     f = plt.figure(figsize=(19, 15))
     plt.matshow(df.corr(), fignum=f.number)
 
     # названия осей
-    plt.xticks(range(df.select_dtypes(['number']).shape[1]), 
-               df.select_dtypes(['number']).columns, 
-               fontsize=14, rotation=45) 
-    plt.yticks(range(df.select_dtypes(['number']).shape[1]), 
+    plt.xticks(range(df.select_dtypes(['number']).shape[1]),
+               df.select_dtypes(['number']).columns,
+               fontsize=14, rotation=45)
+    plt.yticks(range(df.select_dtypes(['number']).shape[1]),
                df.select_dtypes(['number']).columns,
                fontsize=14)
-    
+
     # шкала корреляции
-    cb = plt.colorbar() 
+    cb = plt.colorbar()
     cb.ax.tick_params(labelsize=14)
 
     # заголовок
@@ -50,7 +48,7 @@ def corr_matrix():
     plt.show()
 
 
-def top_tracks(key, count):
+def top_tracks(key, count, df):
     '''
     Функция для получения топа треков по параметру
     Возвращает лист названия столбцов и лист листов значений
@@ -67,7 +65,7 @@ def top_tracks(key, count):
         out.append(d)
     return out
 
-# TODO добавить года
+
 def artist_popularity(name):
     '''
     Функция для получения популярности треков артиста по порядку
@@ -78,7 +76,7 @@ def artist_popularity(name):
     x = [k for k in range(len(y))]
     return x, y
 
-# TODO добавить года
+
 def genre_evolution(genre):
     df2 = df.loc[df["genre"] == genre]["popularity"]
     y = df2.values.tolist()
