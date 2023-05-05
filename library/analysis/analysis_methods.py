@@ -87,8 +87,13 @@ def artist_popularity(name, df, color):
     plt.show()
 
 
-def genre_evolution(genre, df):
+def genre_evolution(genre, df, color):
     df2 = df.loc[df["genre"] == genre]["popularity"]
     y = df2.values.tolist()
     x = [k for k in range(len(y))]
-    return x, y
+    f = plt.figure(figsize=(15, 8))
+    plt.plot(x, y, "o", color=color)
+    plt.title(f"Evolution of {genre} genre", fontsize=16)
+    plt.xlabel("Number of track", fontsize=14)
+    plt.ylabel("Popularity", fontsize=14)
+    plt.show()
