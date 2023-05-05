@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def average(param_key, param_number, df):
+def average(param_key, param_number, df, color, title):
     '''
     Функция для получения зависимости
     среднего численного параметра от качественного параметра
@@ -12,7 +12,13 @@ def average(param_key, param_number, df):
     # param_number - количественное значение по типу liveness, popularity
 
     df_to_graph = df.groupby(param_key, as_index=False)[param_number].mean()
-    return list(df_to_graph[param_key]), list(df_to_graph[param_number])
+    f = plt.figure(figsize=(15, 8))
+    plt.bar(df_to_graph[param_key], df_to_graph[param_number], color=color)
+    plt.xlabel(param_key, fontsize=14)
+    plt.xticks(rotation=45)
+    plt.ylabel(param_number, fontsize=14)
+    plt.title(title, fontsize=16)
+    plt.show()
 
 
 def describe_artist(name, param, df):
