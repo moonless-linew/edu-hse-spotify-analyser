@@ -115,3 +115,16 @@ def average_artists_popularity(df):
     """
     df_to_print = df.groupby("artist_name")["popularity"].mean()
     return df_to_print.to_dict()
+
+
+def count_of_tracks(param, color, df):
+    """
+    Функция для построения графика распределения
+    треков по параметру
+    """
+    plt.figure(figsize=(15, 8))
+    plt.hist(df[param], color=color)
+    plt.xlabel(param)
+    plt.ylabel("Number of tracks")
+    plt.title(f"Distribution of tracks by {param}")
+    plt.show()
