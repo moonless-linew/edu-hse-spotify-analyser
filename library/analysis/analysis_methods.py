@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 # выполнено в ui
@@ -134,4 +135,32 @@ def count_of_tracks(param, bins, df, color="r"):
     plt.xlabel(param, fontsize=14)
     plt.ylabel("Number of tracks", fontsize=14)
     plt.title(f"Distribution of tracks by {param}", fontsize=16)
+    plt.show()
+
+
+def polar_graph_for_all(df):
+    df = df.sort_values("popularity", ascending=False)
+    df1 = df[["acousticness", "danceability", "energy", "instrumentalness", "liveness", "speechiness", "valence"]]
+
+    features = df1.mean().tolist()
+    features_100 = df1.head(100).mean().tolist()
+
+    labels = list(df1)[:]
+    angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
+
+    plt.figure(figsize=(9, 9))
+
+    ax = plt.subplot(111, polar=True)
+    ax.plot(angles, features_100, '-o', color='blue', label="most popular tracks")
+    ax.fill(angles, features_100, alpha=0.25, facecolor='blue')
+    ax.set_thetagrids(angles * 180 / np.pi, labels, fontsize=14)
+
+    ax = plt.subplot(111, polar=True)
+    ax.plot(angles, features, '-o', color='red', label="all tracks")
+    ax.fill(angles, features, alpha=0.25, facecolor='red')
+
+    ax.set_rlabel_position(250)
+    plt.title("Mean values", fontsize=16)
+    plt.legend(loc="lower left")
+
     plt.show()
