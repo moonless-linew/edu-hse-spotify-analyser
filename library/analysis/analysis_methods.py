@@ -168,3 +168,24 @@ def polar_graph_for_all(df):
     plt.legend(loc="lower left")
 
     plt.show()
+
+
+def polar_graph_for_artist(track_id, df):
+    """
+    Функция для построения полярного графика трека
+    """
+    d = df.loc[df["track_id"] == track_id]
+    df1 = d[["acousticness", "danceability", "energy", "instrumentalness", "liveness", "speechiness", "valence"]]
+    print(df1)
+    features = df1.mean().tolist()
+    labels = list(df1)[:]
+    angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
+
+    plt.figure(figsize=(9, 9))
+    ax = plt.subplot(111, polar=True)
+    ax.plot(angles, features, '-o', color='blue')
+    ax.fill(angles, features, alpha=0.25, facecolor='blue')
+    ax.set_thetagrids(angles * 180 / np.pi, labels, fontsize=14)
+
+    ax.set_rlabel_position(250)
+    plt.show()
