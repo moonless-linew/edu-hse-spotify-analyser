@@ -139,6 +139,10 @@ def count_of_tracks(param, bins, df, color="r"):
 
 
 def polar_graph_for_all(df):
+    """
+    Функция для построения полярного графика
+    для 100 самых популярных и для всех треков
+    """
     df = df.sort_values("popularity", ascending=False)
     df1 = df[["acousticness", "danceability", "energy", "instrumentalness", "liveness", "speechiness", "valence"]]
 
