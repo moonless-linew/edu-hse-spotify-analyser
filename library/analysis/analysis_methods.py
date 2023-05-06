@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def average(param_key, param_number, df, color, title):
+def average(param_key, param_number, df, type, color="r", title=""):
     """
     Функция для построения графика зависимости
     среднего численного параметра от качественного параметра
@@ -12,7 +12,12 @@ def average(param_key, param_number, df, color, title):
 
     df_to_graph = df.groupby(param_key, as_index=False)[param_number].mean()
     plt.figure(figsize=(15, 8))
-    plt.bar(df_to_graph[param_key], df_to_graph[param_number], color=color)
+    if type == "plot":
+        plt.plot(df_to_graph[param_key], df_to_graph[param_number], color=color)
+    elif type == "dot":
+        plt.plot(df_to_graph[param_key], df_to_graph[param_number], "o", color=color)
+    elif type == "bar":
+        plt.bar(df_to_graph[param_key], df_to_graph[param_number], color=color)
     plt.xlabel(param_key, fontsize=14)
     plt.xticks(rotation=45)
     plt.ylabel(param_number, fontsize=14)
@@ -117,13 +122,13 @@ def average_artists_popularity(df):
     return df_to_print.to_dict()
 
 
-def count_of_tracks(param, color, df):
+def count_of_tracks(param, bins, df, color = "r"):
     """
     Функция для построения графика распределения
     треков по параметру
     """
     plt.figure(figsize=(15, 8))
-    plt.hist(df[param], color=color)
+    plt.hist(df[param], color=color, bins=bins)
     plt.xlabel(param)
     plt.ylabel("Number of tracks")
     plt.title(f"Distribution of tracks by {param}")

@@ -4,7 +4,6 @@ import pandas as pd
 import sys
 import os
 
-
 matplotlib.use('Qt5Agg')
 
 
@@ -22,16 +21,20 @@ def setup_combo_boxes():
     keys = ['popularity', 'acousticness', 'danceability',
             'energy', 'instrumentalness', 'key', 'liveness', 'loudness', 'mode', 'speechiness', 'tempo',
             'valence']
+    keys_without_quality = ['popularity', 'acousticness', 'danceability',
+                            'energy', 'instrumentalness', 'liveness', 'loudness', 'speechiness', 'tempo',
+                            'valence'
+                            ]
     ui.x_axis.addItems(
         keys
     )
     ui.y_axis.addItems(
-        keys
+        keys_without_quality
     )
     ui.hist_parameter.addItems(keys)
     ui.artist_parameter.addItems(keys)
 
-    ui.comboBoxTypes.addItems(["linear", "pie"])
+    ui.comboBoxTypes.addItems(["bar", "plot", "dot"])
     ui.comboBoxParameters_2.addItems(keys)
 
 
@@ -43,7 +46,7 @@ def setup_listeners():
         lambda: set_current_value_of_slider2(ui.bins_slider.value())
     )
     ui.build_hist.clicked.connect(
-        lambda: open_plot_dialog(ui.hist_parameter.currentText(), "r"))
+        lambda: count_of_tracks(ui.hist_parameter.currentText(), ui.bins_slider.value() ,data))
     ui.top_tracks_calculate.clicked.connect(
         lambda: calculate_top_tracks(ui.comboBoxParameters_2.currentText(), ui.horizontalSlider.value())
     )
@@ -51,14 +54,20 @@ def setup_listeners():
         lambda: corr_matrix(data)
     )
     ui.popularity_plot.clicked.connect(
-        lambda: artist_popularity(ui.artist_list.currentItem().text(), data)
+        lambda: artist_param_graph(ui.artist_list.currentItem().text(), data, ui.artist_parameter.currentText())
+    )
+    ui.plot_by_parameter_build.clicked.connect(
+        lambda: average(ui.x_axis.currentText(), ui.y_axis.currentText(), data, ui.comboBoxTypes.currentText())
     )
 
 
 def set_current_value_of_slider1(value):
     ui.label_9.setText("Max number of items: " + str(value))
+
+
 def set_current_value_of_slider2(value):
     ui.bins.setText("Bins: " + str(value))
+
 
 def calculate_top_tracks(key, count):
     tracks = top_tracks(key, count, data, reverse=ui.invert.isChecked())
