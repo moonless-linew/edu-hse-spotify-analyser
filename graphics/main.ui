@@ -1208,7 +1208,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Correlation</string>
+           <string>Correlation of dataset</string>
           </property>
          </widget>
         </item>
@@ -1231,6 +1231,13 @@
             <widget class="QPushButton" name="correlation">
              <property name="text">
               <string>Show correlation</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="polar_graph">
+             <property name="text">
+              <string>Show polar graph</string>
              </property>
             </widget>
            </item>
