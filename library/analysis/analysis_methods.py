@@ -20,6 +20,7 @@ def average(param_key, param_number, df, color, title):
     plt.show()
 
 
+# выполнено в ui
 def describe_artist(name, param, df):
     """
     Функция для описания параметра артиста.
@@ -27,7 +28,7 @@ def describe_artist(name, param, df):
     """
     return df.loc[df["artist_name"] == name, param].describe().to_dict()
 
-
+# выполнено в ui
 def corr_matrix(df):
     """
     Функция для построения матрицы корреляций
@@ -51,7 +52,7 @@ def corr_matrix(df):
     plt.title('Matrix of correlation', fontsize=16)
     plt.show()
 
-
+# выполнено в ui
 def top_tracks(key, count, df, reverse):
     """
     Функция для получения топа треков по параметру.
@@ -72,7 +73,7 @@ def top_tracks(key, count, df, reverse):
     return out
 
 
-def artist_popularity(name, df, color):
+def artist_popularity(name, df):
     """
     Функция для построения графика
     популярности треков артиста по порядку
@@ -81,7 +82,7 @@ def artist_popularity(name, df, color):
     y = df2.values.tolist()
     x = [k for k in range(len(y))]
     plt.figure(figsize=(15, 8))
-    plt.plot(x, y, "-o", color=color)
+    plt.plot(x, y, "-o")
     plt.title(f"Popularity of {name}", fontsize=16)
     plt.xlabel("Number of track", fontsize=14)
     plt.ylabel("Popularity", fontsize=14)
@@ -103,7 +104,7 @@ def genre_evolution(genre, df, color):
     plt.ylabel("Popularity", fontsize=14)
     plt.show()
 
-
+#доп функционал
 def average_artists_popularity(df):
     """
     Функция для получения списка средних популярностей артистов.

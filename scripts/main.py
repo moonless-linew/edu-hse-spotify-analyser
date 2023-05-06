@@ -50,6 +50,9 @@ def setup_listeners():
     ui.correlation.clicked.connect(
         lambda: corr_matrix(data)
     )
+    ui.popularity_plot.clicked.connect(
+        lambda: artist_popularity(ui.artist_list.currentItem().text(), data)
+    )
 
 
 def set_current_value_of_slider1(value):

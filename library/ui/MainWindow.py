@@ -548,6 +548,9 @@ class Ui_MainWindow(object):
         self.label_55.setObjectName("label_55")
         self.gridLayout_5.addWidget(self.label_55, 2, 2, 1, 1)
         self.verticalLayout_6.addWidget(self.frame_6)
+        self.popularity_plot = QtWidgets.QPushButton(self.tab_3)
+        self.popularity_plot.setObjectName("popularity_plot")
+        self.verticalLayout_6.addWidget(self.popularity_plot)
         self.tabWidget.addTab(self.tab_3, "")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
@@ -836,7 +839,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -882,6 +885,7 @@ class Ui_MainWindow(object):
         self.top_label.setText(_translate("MainWindow", "top"))
         self.unique_label.setText(_translate("MainWindow", "unique"))
         self.label_55.setText(_translate("MainWindow", "count"))
+        self.popularity_plot.setText(_translate("MainWindow", "Show artist popularity plot"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Artist analysis"))
         self.label_11.setText(_translate("MainWindow", "Graphs for analyzing dependencies between different parameters"))
         self.label_22.setText(_translate("MainWindow", "Plot"))

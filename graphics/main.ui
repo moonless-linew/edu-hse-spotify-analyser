@@ -61,7 +61,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -959,6 +959,13 @@
             </widget>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="popularity_plot">
+          <property name="text">
+           <string>Show artist popularity plot</string>
+          </property>
          </widget>
         </item>
        </layout>
