@@ -1,7 +1,7 @@
-import pandas as pd
 import matplotlib.pyplot as plt
 
 
+# выполнено в ui
 def average(param_key, param_number, df, type, color="r", title=""):
     """
     Функция для построения графика зависимости
@@ -80,6 +80,7 @@ def top_tracks(key, count, df, reverse):
     return out
 
 
+# выполнено в ui
 def artist_param_graph(name, df, param):
     """
     Функция для построения графика
@@ -122,6 +123,7 @@ def average_artists_popularity(df):
     return df_to_print.to_dict()
 
 
+# выполнено в ui
 def count_of_tracks(param, bins, df, color="r"):
     """
     Функция для построения графика распределения
