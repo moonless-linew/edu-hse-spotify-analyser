@@ -3,7 +3,7 @@ import numpy as np
 
 
 # выполнено в ui
-def average(param_key, param_number, df, type, color="r", title=""):
+def average(param_key, param_number, df, type, color="r"):
     """
     Функция для построения графика зависимости
     среднего численного параметра от качественного параметра

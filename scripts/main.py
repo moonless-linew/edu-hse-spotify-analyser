@@ -10,15 +10,9 @@ import os
 
 matplotlib.use('Qt5Agg')
 
-
-def open_plot_dialog(param, color):
-    dialog = PlotDialog()
-    ax = dialog.figure.add_subplot(111)
-    column = data[param]
-    ax.hist(column, color=color, bins=ui.bins_slider.value())
-    ax.set_title("Number of tracks per parameter")
-    dialog.canvas.draw()
-    dialog.exec_()
+"""
+Конфигурируем все выпадающие меню
+"""
 
 
 def setup_combo_boxes():
@@ -44,12 +38,18 @@ def setup_combo_boxes():
     ui.comboBoxParameters_2.addItems(keys)
 
 
+"""
+Конфигурируем триггеры на кнопки и слайдеры
+"""
+
+
 def setup_listeners():
     ui.horizontalSlider.valueChanged.connect(
-        lambda: set_current_value_of_slider1(ui.horizontalSlider.value())
+        lambda: ui.label_9.setText("Max number of items: " +
+                                   str(ui.horizontalSlider.value()))
     )
     ui.bins_slider.valueChanged.connect(
-        lambda: set_current_value_of_slider2(ui.bins_slider.value())
+        lambda: ui.bins.setText("Bins: " + str(ui.bins_slider.value()))
     )
     ui.build_hist.clicked.connect(
         lambda: count_of_tracks(
@@ -69,6 +69,9 @@ def setup_listeners():
     ui.plot_by_parameter_build.clicked.connect(
         lambda: average(ui.x_axis.currentText(), ui.y_axis.currentText(),
                         data, ui.comboBoxTypes.currentText())
+    )
+    ui.polar_graph.clicked.connect(
+        lambda: polar_graph_for_all(data)
     )
 
 
@@ -171,7 +174,8 @@ def track_list_row_change():
 
 
 def read_data():
-    return pd.read_csv(os.path.dirname(__file__).replace("scripts", "data") + "\SpotifyFeatures.csv")
+    return pd.read_csv(os.path.dirname(__file__).replace("scripts", "data")
+                       + "\SpotifyFeatures.csv")
 
 
 if __name__ == "__main__":
@@ -179,8 +183,13 @@ if __name__ == "__main__":
 
     sys.path.insert(0, "..")
     from library.ui.MainWindow import Ui_MainWindow
-    from library.ui.PlotDialog import PlotDialog
-    from library.analysis.analysis_methods import *
+    from library.analysis.analysis_methods import top_tracks
+    from library.analysis.analysis_methods import count_of_tracks
+    from library.analysis.analysis_methods import polar_graph_for_all
+    from library.analysis.analysis_methods import average
+    from library.analysis.analysis_methods import corr_matrix
+    from library.analysis.analysis_methods import artist_param_graph
+    from library.analysis.analysis_methods import describe_artist
 
     data = read_data()
     app = QtWidgets.QApplication(sys.argv)
@@ -192,5 +201,4 @@ if __name__ == "__main__":
     setup_combo_boxes()
     setup_track_list()
     setup_listeners()
-    print(describe_artist("Ariana Grande", "key", data))
     sys.exit(app.exec_())
