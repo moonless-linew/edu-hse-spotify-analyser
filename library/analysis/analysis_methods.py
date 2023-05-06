@@ -112,7 +112,7 @@ def genre_evolution(genre, df, color):
     plt.show()
 
 
-#TODO доп функционал
+# TODO доп функционал
 def average_artists_popularity(df):
     """
     Функция для получения списка средних популярностей артистов.
@@ -122,14 +122,14 @@ def average_artists_popularity(df):
     return df_to_print.to_dict()
 
 
-def count_of_tracks(param, bins, df, color = "r"):
+def count_of_tracks(param, bins, df, color="r"):
     """
     Функция для построения графика распределения
     треков по параметру
     """
     plt.figure(figsize=(15, 8))
     plt.hist(df[param], color=color, bins=bins)
-    plt.xlabel(param)
-    plt.ylabel("Number of tracks")
-    plt.title(f"Distribution of tracks by {param}")
+    plt.xlabel(param, fontsize=14)
+    plt.ylabel("Number of tracks", fontsize=14)
+    plt.title(f"Distribution of tracks by {param}", fontsize=16)
     plt.show()
