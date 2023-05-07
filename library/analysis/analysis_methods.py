@@ -82,19 +82,16 @@ def top_tracks(key, count, df, reverse):
 
 
 # выполнено в ui
-def artist_param_graph(name, df, param):
-    """
-    Функция для построения графика
-    популярности треков артиста по порядку
-    """
-    df2 = df.loc[df["artist_name"] == name][param]
-    y = df2.values.tolist()
-    x = [k for k in range(len(y))]
+def artist_evolution(artist, param, df):
+    df_sorted = df.sort_values("release_date", ascending=True)
+    df1 = df_sorted.loc[df_sorted["artist_name"] == artist][[param, "release_date"]]
+    df2 = df1.groupby("release_date", as_index=False)[param].mean()
     plt.figure(figsize=(15, 8))
-    plt.plot(x, y, "-o")
-    plt.title(f"{param} of {name}", fontsize=16)
-    plt.xlabel("Number of track", fontsize=14)
-    plt.ylabel(param, fontsize=14)
+    plt.plot(df2["release_date"], df2[param], "-o", color="r")
+    plt.xlabel("Release date", fontsize=14)
+    plt.xticks(rotation=45)
+    plt.ylabel(f"Mean {param}", fontsize=14)
+    plt.title(f"Evolution of {artist} {param}", fontsize=16)
     plt.show()
 
 
