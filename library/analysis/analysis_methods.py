@@ -98,19 +98,19 @@ def artist_param_graph(name, df, param):
     plt.show()
 
 
-def genre_evolution(genre, df, color):
+def genre_evolution(genre, df):
     """
     Функция для построения графика
-    популярности треков жанра по порядку
+    эволюции жанра
     """
-    df2 = df.loc[df["genre"] == genre]["popularity"]
-    y = df2.values.tolist()
-    x = [k for k in range(len(y))]
+    df_sorted = df.sort_values("release_date", ascending=True)
+    df1 = df_sorted.loc[df_sorted["genre"] == genre][["popularity", "year"]]
+    df2 = df1.groupby("year", as_index=False)["popularity"].mean()
     plt.figure(figsize=(15, 8))
-    plt.plot(x, y, "o", color=color)
+    plt.plot(df2["year"], df2["popularity"], "-o", color="r")
+    plt.xlabel("Year", fontsize=14)
+    plt.ylabel("Mean popularity", fontsize=14)
     plt.title(f"Evolution of {genre} genre", fontsize=16)
-    plt.xlabel("Number of track", fontsize=14)
-    plt.ylabel("Popularity", fontsize=14)
     plt.show()
 
 
