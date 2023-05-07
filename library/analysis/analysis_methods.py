@@ -83,6 +83,10 @@ def top_tracks(key, count, df, reverse):
 
 # TODO исправить в ui
 def artist_evolution(artist, param, df):
+    """
+    Функция для построения графика
+    эволюции параметра артиста
+    """
     df_sorted = df.sort_values("release_date", ascending=True)
     df1 = df_sorted.loc[df_sorted["artist_name"] == artist][[param, "release_date"]]
     df2 = df1.groupby("release_date", as_index=False)[param].mean()
