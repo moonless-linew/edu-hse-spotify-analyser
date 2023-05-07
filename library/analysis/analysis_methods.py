@@ -81,7 +81,7 @@ def top_tracks(key, count, df, reverse):
     return out
 
 
-# выполнено в ui
+# TODO исправить в ui
 def artist_evolution(artist, param, df):
     df_sorted = df.sort_values("release_date", ascending=True)
     df1 = df_sorted.loc[df_sorted["artist_name"] == artist][[param, "release_date"]]
