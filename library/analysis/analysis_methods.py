@@ -171,7 +171,8 @@ def polar_graph_for_all(df):
     plt.show()
 
 
-def polar_graph_for_artist(track_id, name, df):
+# TODO добавить имя трека при передачи из интерфейса
+def polar_graph_for_artist(track_id, df, track_name):
     """
     Функция для построения полярного графика трека
     """
@@ -187,6 +188,6 @@ def polar_graph_for_artist(track_id, name, df):
     ax.fill(angles, features, alpha=0.25, facecolor='blue')
     ax.set_thetagrids(angles * 180 / np.pi, labels, fontsize=14)
 
-    plt.title(f"{name}", fontsize=16)
+    plt.title(f"{track_name}", fontsize=16)
     ax.set_rlabel_position(250)
     plt.show()
