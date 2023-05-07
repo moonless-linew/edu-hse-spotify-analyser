@@ -73,14 +73,14 @@ def setup_listeners():
     ui.polar_graph.clicked.connect(
         lambda: polar_graph_for_all(data)
     )
+    ui.polar_track.clicked.connect(
+        lambda: polar_graph_for_artist(str(data["track_id"][ui.track_list.currentRow()]), data)
+    )
 
 
-def set_current_value_of_slider1(value):
-    ui.label_9.setText("Max number of items: " + str(value))
-
-
-def set_current_value_of_slider2(value):
-    ui.bins.setText("Bins: " + str(value))
+"""
+Функция выводящая в список топ треков
+"""
 
 
 def calculate_top_tracks(key, count):
@@ -94,13 +94,24 @@ def calculate_top_tracks(key, count):
             str(current[key]) + ")")
 
 
-def setup_track_list():
+"""
+Конфигурация листа с треками
+"""
+
+
+def setup_lists():
+    ui.track_list.setCurrentRow(0)
     ui.track_list.addItems(data["track_name"])
     ui.track_list.currentRowChanged.connect(track_list_row_change)
     ui.artist_list.addItems(sorted(set(data["artist_name"])))
     ui.artist_list.currentRowChanged.connect(artist_list_row_change)
     ui.artist_list.setCurrentRow(0)
     ui.artist_parameter.currentTextChanged.connect(artist_list_row_change)
+
+
+"""
+Обработка изменения выделенного элемента из листа артистов
+"""
 
 
 def artist_list_row_change():
@@ -132,6 +143,11 @@ def artist_list_row_change():
         ui.unique.setText("")
         ui.top.setText("")
         ui.freq.setText("")
+
+
+"""
+Обработка изменения выделенного элемента из листа треков
+"""
 
 
 def track_list_row_change():
@@ -173,6 +189,11 @@ def track_list_row_change():
         str(data["valence"][ui.track_list.currentRow()]))
 
 
+"""
+Считывание датасета с Kaggle
+"""
+
+
 def read_data():
     return pd.read_csv(os.path.dirname(__file__).replace("scripts", "data")
                        + "\SpotifyFeatures.csv")
@@ -183,13 +204,7 @@ if __name__ == "__main__":
 
     sys.path.insert(0, "..")
     from library.ui.MainWindow import Ui_MainWindow
-    from library.analysis.analysis_methods import top_tracks
-    from library.analysis.analysis_methods import count_of_tracks
-    from library.analysis.analysis_methods import polar_graph_for_all
-    from library.analysis.analysis_methods import average
-    from library.analysis.analysis_methods import corr_matrix
-    from library.analysis.analysis_methods import artist_param_graph
-    from library.analysis.analysis_methods import describe_artist
+    from library.analysis.analysis_methods import *
 
     data = read_data()
     app = QtWidgets.QApplication(sys.argv)
@@ -198,7 +213,8 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
+
     setup_combo_boxes()
-    setup_track_list()
+    setup_lists()
     setup_listeners()
     sys.exit(app.exec_())

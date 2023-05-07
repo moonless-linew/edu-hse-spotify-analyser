@@ -327,9 +327,9 @@ class Ui_MainWindow(object):
         self.label_24.setObjectName("label_24")
         self.gridLayout_3.addWidget(self.label_24, 0, 2, 1, 1)
         self.verticalLayout_3.addWidget(self.frame_3)
-        self.pushButton_2 = QtWidgets.QPushButton(self.tab_2)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.verticalLayout_3.addWidget(self.pushButton_2)
+        self.polar_track = QtWidgets.QPushButton(self.tab_2)
+        self.polar_track.setObjectName("polar_track")
+        self.verticalLayout_3.addWidget(self.polar_track)
         self.tabWidget.addTab(self.tab_2, "")
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
@@ -857,7 +857,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -884,7 +884,7 @@ class Ui_MainWindow(object):
         self.label_26.setText(_translate("MainWindow", "key:"))
         self.label_17.setText(_translate("MainWindow", "duration_ms:"))
         self.label_24.setText(_translate("MainWindow", "instrumentalness:"))
-        self.pushButton_2.setText(_translate("MainWindow", "Show pie chart"))
+        self.polar_track.setText(_translate("MainWindow", "Show pie chart"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Track analysis"))
         self.label_23.setText(_translate("MainWindow", "Artist description"))
         self.label_25.setText(_translate("MainWindow", "Parameter"))
