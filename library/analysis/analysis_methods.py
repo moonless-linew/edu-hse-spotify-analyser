@@ -82,7 +82,7 @@ def top_tracks(key, count, df, reverse):
 
 
 # TODO исправить в ui
-def artist_evolution(artist, param, df):
+def artist_evolution(artist, df, param):
     """
     Функция для построения графика
     эволюции параметра артиста

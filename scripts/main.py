@@ -62,7 +62,7 @@ def setup_listeners():
         lambda: corr_matrix(data)
     )
     ui.popularity_plot.clicked.connect(
-        lambda: artist_param_graph(
+        lambda: artist_evolution(
             ui.artist_list.currentItem().text(),
             data, ui.artist_parameter.currentText())
     )
