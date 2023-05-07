@@ -22,7 +22,7 @@ def average(param_key, param_number, df, type, color="r"):
     plt.xlabel(param_key, fontsize=14)
     plt.xticks(rotation=45)
     plt.ylabel(param_number, fontsize=14)
-    plt.title(title, fontsize=16)
+    plt.title(f"Average {param_number} of {param_key}", fontsize=16)
     plt.show()
 
 
