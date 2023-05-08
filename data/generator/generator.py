@@ -5,7 +5,7 @@ import requests
 from pandas import DataFrame
 import requests as rq
 
-token = "Bearer BQChovtOtuPclI65k8ORJsp08ILFjhGzcnBkjpSl45X447-kgU5upCUSun18HOYlRky9TiEltDXNrNtBiHdoIEpO-0LdKweax4wvtE9wb6hU06QtDha-"
+token = "Bearer " + "YOUR_TOKEN_HERE"
 data = pd.read_csv("SpotifyFeatures.csv")
 extendedData = DataFrame(columns=["track_id", "release_date"])
 # extendedData = pd.read_csv("result.csv")
