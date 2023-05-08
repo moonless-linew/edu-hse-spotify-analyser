@@ -25,6 +25,11 @@ def setup_combo_boxes():
                             'loudness', 'speechiness', 'tempo',
                             'valence'
                             ]
+    genres = {'Jazz', 'Folk', 'Hip-Hop', 'Reggaeton', 'Anime', 'Electronic', 'Blues', 'Rock', 'Rap',
+              'Alternative', 'Classical', 'Pop', 'Soundtrack', 'A Capella', 'Indie',
+              "Children's Music", 'Children’s Music', 'Country', 'Reggae', 'Comedy', 'Dance', 'R&B',
+              'Ska', 'Soul', 'Opera', 'Movie', 'World'}
+
     ui.x_axis.addItems(
         keys
     )
@@ -32,11 +37,11 @@ def setup_combo_boxes():
         keys_without_quality
     )
     ui.hist_parameter.addItems(keys)
-    ui.artist_parameter.addItems(keys)
+    ui.artist_parameter.addItems(keys_without_quality)
 
     ui.comboBoxTypes.addItems(["bar", "plot", "dot"])
     ui.comboBoxParameters_2.addItems(keys)
-
+    ui.genre_2.addItems(genres)
 
 """
 Конфигурируем триггеры на кнопки и слайдеры
@@ -74,7 +79,11 @@ def setup_listeners():
         lambda: polar_graph_for_all(data)
     )
     ui.polar_track.clicked.connect(
-        lambda: polar_graph_for_artist(str(data["track_id"][ui.track_list.currentRow()]), data)
+        lambda: polar_graph_for_track(str(data["track_id"][ui.track_list.currentRow()]), data,
+                                      str(data["track_name"][ui.track_list.currentRow()]))
+    )
+    ui.genre_evolution_2.clicked.connect(
+        lambda: genre_evolution(ui.genre_2.currentText(), data)
     )
 
 
@@ -196,7 +205,7 @@ def track_list_row_change():
 
 def read_data():
     return pd.read_csv(os.path.dirname(__file__).replace("scripts", "data")
-                       + "\SpotifyFeatures.csv")
+                       + "\SpotifyFeaturesLast.csv")
 
 
 if __name__ == "__main__":

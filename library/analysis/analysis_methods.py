@@ -68,7 +68,8 @@ def top_tracks(key, count, df, reverse):
     """
     # reverse = True -> по возрастанию
     # reverse = False -> по убыванию
-    df_sorted = df.sort_values([key, "artist_name", "track_name"], ascending=[reverse, True, True]).head(count)
+    df_sorted = df.sort_values([key, "artist_name", "track_name"],
+                               ascending=[reverse, True, True]).head(count)
     df_sorted = df_sorted[["artist_name", "track_name", "genre", key]]
     out = []
     b = df_sorted.values.tolist()
@@ -81,7 +82,7 @@ def top_tracks(key, count, df, reverse):
     return out
 
 
-# TODO исправить в ui
+# выполнено в ui
 def artist_evolution(artist, df, param):
     """
     Функция для построения графика
@@ -117,6 +118,7 @@ def artist_evolution(artist, df, param):
         plt.show()
 
 
+# выполнено в ui
 def genre_evolution(genre, df):
     """
     Функция для построения графика
@@ -157,13 +159,16 @@ def count_of_tracks(param, bins, df, color="r"):
     plt.show()
 
 
+# выполнено в ui
 def polar_graph_for_all(df):
     """
     Функция для построения полярного графика
     для 100 самых популярных и для всех треков
     """
     df = df.sort_values("popularity", ascending=False)
-    df1 = df[["acousticness", "danceability", "energy", "instrumentalness", "liveness", "speechiness", "valence"]]
+    df1 = df[
+        ["acousticness", "danceability", "energy", "instrumentalness", "liveness", "speechiness",
+         "valence"]]
 
     features = df1.mean().tolist()
     features_100 = df1.head(100).mean().tolist()
@@ -189,13 +194,16 @@ def polar_graph_for_all(df):
     plt.show()
 
 
+# выполнено в ui
 # TODO добавить имя трека при передачи из интерфейса
-def polar_graph_for_artist(track_id, df, track_name):
+def polar_graph_for_track(track_id, df, track_name):
     """
     Функция для построения полярного графика трека
     """
     d = df.loc[df["track_id"] == track_id]
-    df1 = d[["acousticness", "danceability", "energy", "instrumentalness", "liveness", "speechiness", "valence"]]
+    df1 = d[
+        ["acousticness", "danceability", "energy", "instrumentalness", "liveness", "speechiness",
+         "valence"]]
     features = df1.mean().tolist()
     labels = list(df1)[:]
     angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
