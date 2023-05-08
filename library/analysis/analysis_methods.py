@@ -88,15 +88,33 @@ def artist_evolution(artist, df, param):
     эволюции параметра артиста
     """
     df_sorted = df.sort_values("release_date", ascending=True)
-    df1 = df_sorted.loc[df_sorted["artist_name"] == artist][[param, "release_date"]]
-    df2 = df1.groupby("release_date", as_index=False)[param].mean()
-    plt.figure(figsize=(15, 8))
-    plt.plot(df2["release_date"], df2[param], "-o", color="r")
-    plt.xlabel("Release date", fontsize=14)
-    plt.xticks(rotation=45)
-    plt.ylabel(f"Mean {param}", fontsize=14)
-    plt.title(f"Evolution of {artist} {param}", fontsize=16)
-    plt.show()
+    df3 = df_sorted.loc[df_sorted["artist_name"] == artist]
+    if len(df3 > 30):
+        df1 = df_sorted.loc[df_sorted["artist_name"] == artist][[param, "year"]]
+        df2 = df1.groupby("year", as_index=False)[param].mean()
+
+        plt.figure(figsize=(15, 8))
+        plt.plot(df2["year"], df2[param], "-o", color="r")
+
+        plt.xlabel("Year", fontsize=14)
+        plt.xticks(rotation=45)
+        plt.ylabel(f"Mean {param}", fontsize=14)
+
+        plt.title(f"Evolution of {artist} {param}", fontsize=16)
+        plt.show()
+    else:
+        df1 = df_sorted.loc[df_sorted["artist_name"] == artist][[param, "release_date"]]
+        df2 = df1.groupby("release_date", as_index=False)[param].mean()
+
+        plt.figure(figsize=(15, 8))
+        plt.plot(df2["release_date"], df2[param], "-o", color="r")
+
+        plt.xlabel("Release date", fontsize=14)
+        plt.xticks(rotation=45)
+        plt.ylabel(f"Mean {param}", fontsize=14)
+
+        plt.title(f"Evolution of {artist} {param}", fontsize=16)
+        plt.show()
 
 
 def genre_evolution(genre, df):
