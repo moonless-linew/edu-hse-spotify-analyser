@@ -61,20 +61,24 @@ def corr_matrix(df):
 
 
 # выполнено в ui
-def top_tracks(key, count, df, reverse):
+def top_tracks(key, count, reverse, df, year=-1):
     """
     Функция для получения топа треков по параметру.
     Возвращает лист названия столбцов и лист листов значений
     """
     # reverse = True -> по возрастанию
     # reverse = False -> по убыванию
-    df_sorted = df.sort_values([key, "artist_name", "track_name"],
-                               ascending=[reverse, True, True]).head(count)
+    if year != -1:
+        df1 = df.loc[df["year"] == year]
+    else:
+        df1 = df
+    df_sorted = df1.sort_values([key, "artist_name", "track_name"],
+                                ascending=[reverse, True, True]).head(count)
     df_sorted = df_sorted[["artist_name", "track_name", "genre", key]]
     out = []
     b = df_sorted.values.tolist()
     keys = df_sorted.keys()
-    for i in range(count):
+    for i in range(len(b)):
         d = {}
         for j in range(len(keys)):
             d[keys[j]] = b[i][j]
