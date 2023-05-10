@@ -93,7 +93,8 @@ def artist_evolution(artist, df, param):
     эволюции параметра артиста
     """
     df_sorted = df.sort_values("release_date", ascending=True)
-    df3 = df_sorted.loc[df_sorted["artist_name"] == artist]
+    df3 = df_sorted.loc[df_sorted["year"] > 0]
+    df3 = df3.loc[df_sorted["artist_name"] == artist]
     if df3["release_date"].nunique() > 40:
         df1 = df_sorted.loc[df_sorted["artist_name"] == artist][[param, "year"]]
         df2 = df1.groupby("year", as_index=False)[param].mean()
