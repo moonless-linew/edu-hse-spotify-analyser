@@ -126,7 +126,8 @@ def genre_evolution(genre, df):
     """
     df_sorted = df.sort_values("release_date", ascending=True)
     df1 = df_sorted.loc[df_sorted["genre"] == genre][["popularity", "year"]]
-    df2 = df1.groupby("year", as_index=False)["popularity"].mean()
+    df3 = df1.loc[df1["year"] > 0]
+    df2 = df3.groupby("year", as_index=False)["popularity"].mean()
     plt.figure(figsize=(15, 8))
     plt.plot(df2["year"], df2["popularity"], "-o", color="r")
     plt.xlabel("Year", fontsize=14)
