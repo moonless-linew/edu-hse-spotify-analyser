@@ -40,22 +40,22 @@ def corr_matrix(df):
     """
     Функция для построения матрицы корреляций
     """
-    f = plt.figure(figsize=(15, 8))
-    plt.matshow(df.corr(), fignum=f.number)
+    corr = df.corr()
+    fig, ax = plt.subplots(figsize=(11, 9))
+    im = ax.imshow(corr, interpolation='nearest')
+    fig.colorbar(im, orientation='vertical', fraction=0.05)
 
-    # названия осей
     plt.xticks(range(df.select_dtypes(['number']).shape[1]),
                df.select_dtypes(['number']).columns,
-               fontsize=14, rotation=45)
+               fontsize=14, rotation=80)
     plt.yticks(range(df.select_dtypes(['number']).shape[1]),
                df.select_dtypes(['number']).columns,
                fontsize=14)
 
-    # шкала корреляции
-    cb = plt.colorbar()
-    cb.ax.tick_params(labelsize=14)
-
-    # заголовок
+    for i in range(len(corr.columns)):
+        for j in range(len(corr.columns)):
+            ax.text(j, i, round(corr.to_numpy()[i, j], 3),
+                    ha="center", va="center", color="black")
     plt.title('Matrix of correlation', fontsize=16)
     plt.show()
 
