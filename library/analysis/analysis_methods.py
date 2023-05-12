@@ -1,9 +1,11 @@
+"""
+Файл с функциями анализа
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-# выполнено в ui
-def average(param_key, param_number, df, type, color="r"):
+def average(param_key, param_number, data_frame, graph_type, color="r"):
     """
     Функция для построения графика зависимости
     среднего численного параметра от качественного параметра
@@ -11,13 +13,13 @@ def average(param_key, param_number, df, type, color="r"):
     # param_key - качественное значение по типу key, mode
     # param_number - количественное значение по типу liveness, popularity
 
-    df_to_graph = df.groupby(param_key, as_index=False)[param_number].mean()
+    df_to_graph = data_frame.groupby(param_key, as_index=False)[param_number].mean()
     plt.figure(figsize=(15, 8))
-    if type == "plot":
+    if graph_type == "plot":
         plt.plot(df_to_graph[param_key], df_to_graph[param_number], color=color)
-    elif type == "dot":
+    elif graph_type == "dot":
         plt.plot(df_to_graph[param_key], df_to_graph[param_number], "o", color=color)
-    elif type == "bar":
+    elif graph_type == "bar":
         plt.bar(df_to_graph[param_key], df_to_graph[param_number], color=color)
     plt.xlabel(param_key, fontsize=14)
     plt.xticks(rotation=45)
@@ -26,42 +28,40 @@ def average(param_key, param_number, df, type, color="r"):
     plt.show()
 
 
-# выполнено в ui
-def describe_artist(name, param, df):
+def describe_artist(name, param, data_frame):
     """
     Функция для описания параметра артиста.
     Возвращает словарь
     """
-    return df.loc[df["artist_name"] == name, param].describe().to_dict()
+    return data_frame.loc[data_frame["artist_name"] == name, param].describe().to_dict()
 
 
-# выполнено в ui
-def corr_matrix(df):
+def corr_matrix(data_frame):
     """
     Функция для построения матрицы корреляций
     """
-    corr = df.corr()
-    fig, ax = plt.subplots(figsize=(11, 9))
-    im = ax.imshow(corr, interpolation='nearest')
-    fig.colorbar(im, orientation='vertical', fraction=0.05)
+    corr = data_frame.corr()
+    fig, a_x = plt.subplots(figsize=(11, 9))
+    i_m = a_x.imshow(corr, interpolation='nearest')
+    fig.colorbar(i_m, orientation='vertical', fraction=0.05)
 
-    plt.xticks(range(df.select_dtypes(['number']).shape[1]),
-               df.select_dtypes(['number']).columns,
+    plt.xticks(range(data_frame.select_dtypes(['number']).shape[1]),
+               data_frame.select_dtypes(['number']).columns,
                fontsize=14, rotation=80)
-    plt.yticks(range(df.select_dtypes(['number']).shape[1]),
-               df.select_dtypes(['number']).columns,
+    plt.yticks(range(data_frame.select_dtypes(['number']).shape[1]),
+               data_frame.select_dtypes(['number']).columns,
                fontsize=14)
 
     for i in range(len(corr.columns)):
         for j in range(len(corr.columns)):
-            ax.text(j, i, round(corr.to_numpy()[i, j], 3),
-                    ha="center", va="center", color="black")
+            a_x.text(j, i, round(corr.to_numpy()[i, j], 3),
+                     ha="center", va="center", color="black")
     plt.title('Matrix of correlation', fontsize=16)
     plt.show()
 
 
-# выполнено в ui
-def top_tracks(df, key, count, year_from=-1, year_to=-1, reverse=False):
+# TODO исправить в ui
+def top_tracks(data_frame, key, count, year_from=-1, year_to=-1, reverse=False):
     """
     Функция для получения топа треков по параметру.
     Возвращает лист названия столбцов и лист листов значений
@@ -69,30 +69,29 @@ def top_tracks(df, key, count, year_from=-1, year_to=-1, reverse=False):
     # reverse = True -> по возрастанию
     # reverse = False -> по убыванию
     if year_from != -1 and year_to != -1:
-        df1 = df.loc[(df["year"] >= year_from) & (df["year"] <= year_to)]
+        df1 = data_frame.loc[(data_frame["year"] >= year_from) & (data_frame["year"] <= year_to)]
     else:
-        df1 = df
+        df1 = data_frame
     df_sorted = df1.sort_values([key, "artist_name", "track_name"],
                                 ascending=[reverse, True, True]).head(count)
     df_sorted = df_sorted[["artist_name", "track_name", "genre", key]]
     out = []
-    b = df_sorted.values.tolist()
+    sorted_values_list = df_sorted.values.tolist()
     keys = df_sorted.keys()
-    for i in range(len(b)):
-        d = {}
+    for i in range(len(sorted_values_list)):
+        dict_of_vals = {}
         for j in range(len(keys)):
-            d[keys[j]] = b[i][j]
-        out.append(d)
+            dict_of_vals[keys[j]] = sorted_values_list[i][j]
+        out.append(dict_of_vals)
     return out
 
 
-# выполнено в ui
-def artist_evolution(artist, df, param):
+def artist_evolution(artist, data_frame, param):
     """
     Функция для построения графика
     эволюции параметра артиста
     """
-    df_sorted = df.sort_values("release_date", ascending=True)
+    df_sorted = data_frame.sort_values("release_date", ascending=True)
     df3 = df_sorted.loc[df_sorted["year"] > 0]
     df3 = df3.loc[df_sorted["artist_name"] == artist]
     if df3["release_date"].nunique() > 40:
@@ -123,13 +122,12 @@ def artist_evolution(artist, df, param):
         plt.show()
 
 
-# выполнено в ui
-def genre_evolution(genre, df):
+def genre_evolution(genre, data_frame):
     """
     Функция для построения графика
     эволюции жанра
     """
-    df_sorted = df.sort_values("release_date", ascending=True)
+    df_sorted = data_frame.sort_values("release_date", ascending=True)
     df1 = df_sorted.loc[df_sorted["genre"] == genre][["popularity", "year"]]
     df3 = df1.loc[df1["year"] > 0]
     df2 = df3.groupby("year", as_index=False)["popularity"].mean()
@@ -141,38 +139,35 @@ def genre_evolution(genre, df):
     plt.show()
 
 
-# TODO доп функционал
-def average_artists_popularity(df):
+def average_artists_popularity(data_frame):
     """
     Функция для получения списка средних популярностей артистов.
     Возвращает словарь: ключ - имя артиста, значение - средняя популярность
     """
-    df_to_print = df.groupby("artist_name")["popularity"].mean()
+    df_to_print = data_frame.groupby("artist_name")["popularity"].mean()
     return df_to_print.to_dict()
 
 
-# выполнено в ui
-def count_of_tracks(param, bins, df, color="r"):
+def count_of_tracks(param, bins, data_frame, color="r"):
     """
     Функция для построения графика распределения
     треков по параметру
     """
     plt.figure(figsize=(15, 8))
-    plt.hist(df[param], color=color, bins=bins)
+    plt.hist(data_frame[param], color=color, bins=bins)
     plt.xlabel(param, fontsize=14)
     plt.ylabel("Number of tracks", fontsize=14)
     plt.title(f"Distribution of tracks by {param}", fontsize=16)
     plt.show()
 
 
-# выполнено в ui
-def polar_graph_for_all(df):
+def polar_graph_for_all(data_frame):
     """
     Функция для построения полярного графика
     для 100 самых популярных и для всех треков
     """
-    df = df.sort_values("popularity", ascending=False)
-    df1 = df[
+    data_frame = data_frame.sort_values("popularity", ascending=False)
+    df1 = data_frame[
         ["acousticness", "danceability", "energy", "instrumentalness", "liveness", "speechiness",
          "valence"]]
 
@@ -184,30 +179,28 @@ def polar_graph_for_all(df):
 
     plt.figure(figsize=(9, 9))
 
-    ax = plt.subplot(111, polar=True)
-    ax.plot(angles, features_100, '-o', color='blue', label="most popular tracks")
-    ax.fill(angles, features_100, alpha=0.25, facecolor='blue')
-    ax.set_thetagrids(angles * 180 / np.pi, labels, fontsize=14)
+    a_x = plt.subplot(111, polar=True)
+    a_x.plot(angles, features_100, '-o', color='blue', label="most popular tracks")
+    a_x.fill(angles, features_100, alpha=0.25, facecolor='blue')
+    a_x.set_thetagrids(angles * 180 / np.pi, labels, fontsize=14)
 
-    ax = plt.subplot(111, polar=True)
-    ax.plot(angles, features, '-o', color='red', label="all tracks")
-    ax.fill(angles, features, alpha=0.25, facecolor='red')
+    a_x = plt.subplot(111, polar=True)
+    a_x.plot(angles, features, '-o', color='red', label="all tracks")
+    a_x.fill(angles, features, alpha=0.25, facecolor='red')
 
-    ax.set_rlabel_position(250)
+    a_x.set_rlabel_position(250)
     plt.title("Mean values", fontsize=16)
     plt.legend(loc="lower left")
 
     plt.show()
 
 
-# выполнено в ui
-# TODO добавить имя трека при передачи из интерфейса
-def polar_graph_for_track(track_id, df, track_name):
+def polar_graph_for_track(track_id, data_frame, track_name):
     """
     Функция для построения полярного графика трека
     """
-    d = df.loc[df["track_id"] == track_id]
-    df1 = d[
+    df0 = data_frame.loc[data_frame["track_id"] == track_id]
+    df1 = df0[
         ["acousticness", "danceability", "energy", "instrumentalness", "liveness", "speechiness",
          "valence"]]
     features = df1.mean().tolist()
@@ -215,11 +208,11 @@ def polar_graph_for_track(track_id, df, track_name):
     angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
 
     plt.figure(figsize=(9, 9))
-    ax = plt.subplot(111, polar=True)
-    ax.plot(angles, features, '-o', color='blue')
-    ax.fill(angles, features, alpha=0.25, facecolor='blue')
-    ax.set_thetagrids(angles * 180 / np.pi, labels, fontsize=14)
+    a_x = plt.subplot(111, polar=True)
+    a_x.plot(angles, features, '-o', color='blue')
+    a_x.fill(angles, features, alpha=0.25, facecolor='blue')
+    a_x.set_thetagrids(angles * 180 / np.pi, labels, fontsize=14)
 
     plt.title(f"{track_name}", fontsize=16)
-    ax.set_rlabel_position(250)
+    a_x.set_rlabel_position(250)
     plt.show()
