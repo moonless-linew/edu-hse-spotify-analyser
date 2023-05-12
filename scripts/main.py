@@ -93,7 +93,7 @@ def setup_listeners():
 
 
 def calculate_top_tracks(key, count):
-    tracks = top_tracks(key, count, data, reverse=ui.invert.isChecked())
+    tracks = top_tracks(key, count, ui.invert.isChecked(), data, ui.dateEdit.date().year())
     ui.listWidget_2.clear()
     for i in range(len(tracks)):
         current = tracks[i]
