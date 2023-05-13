@@ -2,6 +2,7 @@
 Файл с функциями анализа
 """
 import matplotlib.pyplot as plt
+import seaborn as sns
 import numpy as np
 
 
@@ -40,23 +41,11 @@ def corr_matrix(data_frame):
     """
     Функция для построения матрицы корреляций
     """
-    corr = data_frame.corr()
-    fig, a_x = plt.subplots(figsize=(11, 9))
-    i_m = a_x.imshow(corr, interpolation='nearest')
-    fig.colorbar(i_m, orientation='vertical', fraction=0.05)
-
-    plt.xticks(range(data_frame.select_dtypes(['number']).shape[1]),
-               data_frame.select_dtypes(['number']).columns,
-               fontsize=14, rotation=80)
-    plt.yticks(range(data_frame.select_dtypes(['number']).shape[1]),
-               data_frame.select_dtypes(['number']).columns,
-               fontsize=14)
-
-    for i in range(len(corr.columns)):
-        for j in range(len(corr.columns)):
-            a_x.text(j, i, round(corr.to_numpy()[i, j], 3),
-                     ha="center", va="center", color="black")
-    plt.title('Matrix of correlation', fontsize=16)
+    plt.figure(figsize=(12, 9))
+    sns.heatmap(data_frame.corr(), annot=True, cmap="coolwarm")
+    plt.yticks(fontsize=14)
+    plt.xticks(fontsize=14, rotation=40)
+    plt.title("Matrix of correlation", fontsize=16)
     plt.show()
 
 
