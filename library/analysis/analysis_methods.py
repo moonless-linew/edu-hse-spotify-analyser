@@ -42,7 +42,7 @@ def corr_matrix(data_frame):
     Функция для построения матрицы корреляций
     """
     plt.figure(figsize=(12, 9))
-    sns.heatmap(data_frame.corr(), annot=True, cmap="coolwarm")
+    sns.heatmap(data_frame.corr(), annot=True, cmap="RdBu_r")
     plt.yticks(fontsize=14)
     plt.xticks(fontsize=14, rotation=40)
     plt.title("Matrix of correlation", fontsize=16)
