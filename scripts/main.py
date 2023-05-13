@@ -2,20 +2,20 @@
 Главный модуль для запуска приложения. В нем конфигурируются все кнопки
 и все текстовые поля.
 """
-from PyQt5 import QtWidgets
-import matplotlib
-import pandas as pd
 import sys
 import os
+from PyQt5 import QtWidgets
+from PyQt5 import QtGui
+import matplotlib
+import pandas as pd
 
 matplotlib.use('Qt5Agg')
 
-"""
-Конфигурируем все выпадающие меню
-"""
-
 
 def setup_combo_boxes():
+    """
+    Функция для конфигурации выпадающих меню
+    """
     keys = ['popularity', 'acousticness', 'danceability',
             'energy', 'instrumentalness', 'key', 'liveness', 'loudness',
             'mode', 'speechiness', 'tempo',
@@ -43,12 +43,12 @@ def setup_combo_boxes():
     ui.comboBoxParameters_2.addItems(keys)
     ui.genre_2.addItems(genres)
 
-"""
-Конфигурируем триггеры на кнопки и слайдеры
-"""
-
 
 def setup_listeners():
+    """
+    Функция для конфигурации 
+    триггеров на кнопки и слайдеры
+    """
     ui.horizontalSlider.valueChanged.connect(
         lambda: ui.label_9.setText("Max number of items: " +
                                    str(ui.horizontalSlider.value()))
@@ -57,43 +57,41 @@ def setup_listeners():
         lambda: ui.bins.setText("Bins: " + str(ui.bins_slider.value()))
     )
     ui.build_hist.clicked.connect(
-        lambda: count_of_tracks(
+        lambda: anlib.count_of_tracks(
             ui.hist_parameter.currentText(), ui.bins_slider.value(), data))
     ui.top_tracks_calculate.clicked.connect(
         lambda: calculate_top_tracks(
             ui.comboBoxParameters_2.currentText(), ui.horizontalSlider.value())
     )
     ui.correlation.clicked.connect(
-        lambda: corr_matrix(data)
+        lambda: anlib.corr_matrix(data)
     )
     ui.popularity_plot.clicked.connect(
-        lambda: artist_evolution(
+        lambda: anlib.artist_evolution(
             ui.artist_list.currentItem().text(),
             data, ui.artist_parameter.currentText())
     )
     ui.plot_by_parameter_build.clicked.connect(
-        lambda: average(ui.x_axis.currentText(), ui.y_axis.currentText(),
-                        data, ui.comboBoxTypes.currentText())
+        lambda: anlib.average(ui.x_axis.currentText(), ui.y_axis.currentText(),
+                              data, ui.comboBoxTypes.currentText())
     )
     ui.polar_graph.clicked.connect(
-        lambda: polar_graph_for_all(data)
+        lambda: anlib.polar_graph_for_all(data)
     )
     ui.polar_track.clicked.connect(
-        lambda: polar_graph_for_track(str(data["track_id"][ui.track_list.currentRow()]), data,
-                                      str(data["track_name"][ui.track_list.currentRow()]))
+        lambda: anlib.polar_graph_for_track(str(data["track_id"][ui.track_list.currentRow()]), data,
+                                            str(data["track_name"][ui.track_list.currentRow()]))
     )
     ui.genre_evolution_2.clicked.connect(
-        lambda: genre_evolution(ui.genre_2.currentText(), data)
+        lambda: anlib.genre_evolution(ui.genre_2.currentText(), data)
     )
-
-
-"""
-Функция выводящая в список топ треков
-"""
 
 
 def calculate_top_tracks(key, count):
-    tracks = top_tracks(key, count, ui.invert.isChecked(), data, ui.dateEdit.date().year())
+    """
+    Функция выводящая в список топ треков
+    """
+    tracks = anlib.top_tracks(key, count, ui.invert.isChecked(), data, ui.dateEdit.date().year())
     ui.listWidget_2.clear()
     for i in range(len(tracks)):
         current = tracks[i]
@@ -103,12 +101,11 @@ def calculate_top_tracks(key, count):
             str(current[key]) + ")")
 
 
-"""
-Конфигурация листа с треками
-"""
-
-
 def setup_lists():
+    """
+    Функция для конфигурации 
+    списка с треками
+    """
     ui.track_list.setCurrentRow(0)
     ui.track_list.addItems(data["track_name"])
     ui.track_list.currentRowChanged.connect(track_list_row_change)
@@ -118,14 +115,13 @@ def setup_lists():
     ui.artist_parameter.currentTextChanged.connect(artist_list_row_change)
 
 
-"""
-Обработка изменения выделенного элемента из листа артистов
-"""
-
-
 def artist_list_row_change():
-    description = describe_artist(ui.artist_list.currentItem().text(),
-                                  ui.artist_parameter.currentText(), data)
+    """
+    Функция для обработки изменений 
+    выделенного элемента из списка артистов
+    """
+    description = anlib.describe_artist(ui.artist_list.currentItem().text(),
+                                        ui.artist_parameter.currentText(), data)
     if ui.artist_parameter.currentText() in ["key", "mode"]:
         ui.count.setText("")
         ui.mean.setText("")
@@ -154,12 +150,11 @@ def artist_list_row_change():
         ui.freq.setText("")
 
 
-"""
-Обработка изменения выделенного элемента из листа треков
-"""
-
-
 def track_list_row_change():
+    """
+    Функция для обработки изменений 
+    выделенного элемента из списка треков
+    """
     ui.genre.setText(
         data["genre"][ui.track_list.currentRow()])
     ui.artist_name.setText(
@@ -198,22 +193,18 @@ def track_list_row_change():
         str(data["valence"][ui.track_list.currentRow()]))
 
 
-"""
-Считывание датасета с Kaggle
-"""
-
-
 def read_data():
+    """
+    Функция для считывания базы данных
+    """
     return pd.read_csv(os.path.dirname(__file__).replace("scripts", "data")
-                       + "\SpotifyFeaturesLast.csv")
+                       + "/SpotifyFeaturesLast.csv")
 
 
 if __name__ == "__main__":
-    from PyQt5 import QtGui
-
     sys.path.insert(0, "..")
     from library.ui.MainWindow import Ui_MainWindow
-    from library.analysis.analysis_methods import *
+    import library.analysis.analysis_methods as anlib
 
     data = read_data()
     app = QtWidgets.QApplication(sys.argv)
