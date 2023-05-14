@@ -4,6 +4,9 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import warnings
+
+warnings.filterwarnings("ignore")
 
 
 def average(param_key, param_number, data_frame, graph_type, color="r"):
@@ -26,6 +29,7 @@ def average(param_key, param_number, data_frame, graph_type, color="r"):
     plt.xticks(rotation=45)
     plt.ylabel(param_number, fontsize=14)
     plt.title(f"Average {param_number} of {param_key}", fontsize=16)
+    plt.savefig("../output/average.png")
     plt.show()
 
 
@@ -46,6 +50,7 @@ def corr_matrix(data_frame):
     plt.yticks(fontsize=14)
     plt.xticks(fontsize=14, rotation=40)
     plt.title("Matrix of correlation", fontsize=16)
+    plt.savefig("../output/correlation.png")
     plt.show()
 
 
@@ -95,6 +100,7 @@ def artist_evolution(artist, data_frame, param):
         plt.ylabel(f"Mean {param}", fontsize=14)
 
         plt.title(f"Evolution of {artist} {param}", fontsize=16)
+        plt.savefig("../output/artist_evolution.png")
         plt.show()
     else:
         df1 = df_sorted.loc[df_sorted["artist_name"] == artist][[param, "release_date"]]
@@ -125,6 +131,7 @@ def genre_evolution(genre, data_frame):
     plt.xlabel("Year", fontsize=14)
     plt.ylabel("Mean popularity", fontsize=14)
     plt.title(f"Evolution of {genre} genre", fontsize=16)
+    plt.savefig("../output/genre_evolution.png")
     plt.show()
 
 
@@ -147,6 +154,7 @@ def count_of_tracks(param, bins, data_frame, color="r"):
     plt.xlabel(param, fontsize=14)
     plt.ylabel("Number of tracks", fontsize=14)
     plt.title(f"Distribution of tracks by {param}", fontsize=16)
+    plt.savefig("../output/hist.png")
     plt.show()
 
 
@@ -180,7 +188,7 @@ def polar_graph_for_all(data_frame):
     a_x.set_rlabel_position(250)
     plt.title("Mean values", fontsize=16)
     plt.legend(loc="lower left")
-
+    plt.savefig("../output/polar_graph.png")
     plt.show()
 
 
@@ -204,4 +212,5 @@ def polar_graph_for_track(track_id, data_frame, track_name):
 
     plt.title(f"{track_name}", fontsize=16)
     a_x.set_rlabel_position(250)
+    plt.savefig("../output/polar_graph_for_all.png")
     plt.show()

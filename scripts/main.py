@@ -91,7 +91,8 @@ def calculate_top_tracks(key, count):
     """
     Функция выводящая в список топ треков
     """
-    tracks = anlib.top_tracks(key, count, ui.invert.isChecked(), data, ui.dateEdit.date().year())
+    tracks = anlib.top_tracks(data, key, count, ui.dateEdit.date().year(),
+                              ui.dateEdit_2.date().year(), ui.invert.isChecked())
     ui.listWidget_2.clear()
     for i in range(len(tracks)):
         current = tracks[i]
