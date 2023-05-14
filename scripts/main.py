@@ -8,7 +8,9 @@ from PyQt5 import QtWidgets
 from PyQt5 import QtGui
 import matplotlib
 import pandas as pd
+import warnings
 
+warnings.filterwarnings("ignore")
 matplotlib.use('Qt5Agg')
 
 
