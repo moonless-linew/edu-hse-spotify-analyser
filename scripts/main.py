@@ -110,7 +110,7 @@ def setup_lists():
     списка с треками
     """
     ui.track_list.setCurrentRow(0)
-    ui.track_list.addItems(data["track_name"])
+    ui.track_list.addItems(data["track_name"].map(str))
     ui.track_list.currentRowChanged.connect(track_list_row_change)
     ui.artist_list.addItems(sorted(set(data["artist_name"])))
     ui.artist_list.currentRowChanged.connect(artist_list_row_change)

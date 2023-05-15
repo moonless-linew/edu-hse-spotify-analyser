@@ -114,6 +114,7 @@ def artist_evolution(artist, data_frame, param):
         plt.ylabel(f"Mean {param}", fontsize=14)
 
         plt.title(f"Evolution of {artist} {param}", fontsize=16)
+        plt.savefig("../output/artist_parameter_evolution.png")
         plt.show()
 
 
@@ -153,7 +154,7 @@ def count_of_tracks(param, bins, data_frame, color="r"):
     plt.hist(data_frame[param], color=color, bins=bins)
     plt.xlabel(param, fontsize=14)
     plt.ylabel("Number of tracks", fontsize=14)
-    plt.title(f"Distribution of tracks by {param}", fontsize=16)
+    plt.title(f"Hist of tracks by {param}", fontsize=16)
     plt.savefig("../output/hist.png")
     plt.show()
 
