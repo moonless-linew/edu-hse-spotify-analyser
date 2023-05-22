@@ -115,6 +115,7 @@ def setup_lists():
     ui.artist_list.addItems(sorted(set(data["artist_name"])))
     ui.artist_list.currentRowChanged.connect(artist_list_row_change)
     ui.artist_list.setCurrentRow(0)
+    ui.track_list.setCurrentRow(0)
     ui.artist_parameter.currentTextChanged.connect(artist_list_row_change)
 
 
