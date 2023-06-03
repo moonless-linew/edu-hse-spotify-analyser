@@ -215,3 +215,6 @@ def polar_graph_for_track(track_id, data_frame, track_name):
     a_x.set_rlabel_position(250)
     plt.savefig("../output/polar_graph_for_all.png")
     plt.show()
+
+
+# немного шуток для саня
